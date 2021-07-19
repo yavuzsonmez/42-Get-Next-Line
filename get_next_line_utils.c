@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:24:49 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/19 14:41:59 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/19 18:23:06 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,31 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	s[i] = 0;
 	return (s);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	size_t	count;
+	char	*ss;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	if (start >= ft_strlen(s))
+		count = 0;
+	else if (ft_strlen(s + start) >= len)
+		count = len;
+	else
+		count = ft_strlen(s + start);
+	ss = (char *)malloc(sizeof(char) * (count + 1));
+	if (!ss)
+		return (NULL);
+	while (i < count)
+	{
+		ss[i] = s[start + i];
+		i++;
+	}
+	ss[i] = 0;
+	return (ss);
 }
