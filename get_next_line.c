@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 12:31:58 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/20 14:28:42 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/20 15:27:46 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ char	*get_next_line(int fd)
 {
 	if (fd < 0)
 		return (NULL);
-	static size_t i;
+	size_t i;
 	size_t k;
-	char *str;
+	static char *str;
 	char *catstr;
 	char *newline;
 	char c;
@@ -30,22 +30,24 @@ char	*get_next_line(int fd)
 	if (read(fd, str, BUFFER_SIZE) == 0)
 		return (NULL);
 	str[BUFFER_SIZE] = '\0';
+	catstr = str;
 	while(str[i] && str[i] != '\n')
 	{
 		i++;
 		if (str[i] == '\n')
-			break;
+			break ;
 		else if (str[i] == '\0')
 		{
 			if (read(fd, &c, 1) == 0)
 				return (NULL);
 			catstr = ft_strjoin(str, &c);
-			free(str);
 		}
-
 	}
-	newline = ft_substr(str, 0, i);
+	newline = ft_substr(catstr, 0, i);
+	str = ft_substr(str, i, BUFFER_SIZE);
 	free(str);
+	if (catstr)
+		free(catstr);
 	return(newline);
 }
 
@@ -54,8 +56,8 @@ int main(void)
 	int fd = open("text.txt", O_RDONLY);
 	char *newline = get_next_line(fd);
 	printf("%s\n", newline);
-	//newline = get_next_line(fd);
-	//printf("%s\n", newline);
+	newline = get_next_line(fd);
+	printf("%s\n", newline);
 	//newline = get_next_line(fd);
 	//printf("%s\n", newline);
 	//while (newline)
