@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 12:31:58 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/20 09:09:46 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/20 09:54:36 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,25 @@ char	*get_next_line(int fd)
 	char *newline;
 
 	i = 0;
-	if (!str)
-		str = (char *)malloc(sizeof(char));
-	if (str[i] && str[i] == '\n')
-		i++;
-	else
-	{
-		free(str);
-		str = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		read(fd, str, BUFFER_SIZE);
-		str[BUFFER_SIZE] = '\0';
-	}
+	//if (!str)
+	//	str = (char *)malloc(sizeof(char));
+	//if (str[i] && str[i] == '\n')
+	//	i++;
+	//else
+	//{
+	//	free(str);
+	//	str = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	//	read(fd, str, BUFFER_SIZE);
+	//	str[BUFFER_SIZE] = '\0';
+	//}
+	str = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	read(fd, str, BUFFER_SIZE);
+	str[BUFFER_SIZE] = '\0';
 	while(str[i] && str[i] != '\n')
 		i++;
 	newline = ft_substr(str, 0, i);
+	free(str);
+	str = ft_substr(str, 0, i);
 	return(newline);
 }
 
