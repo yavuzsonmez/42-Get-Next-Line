@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 12:31:58 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/20 09:54:36 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/20 10:40:26 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ char	*get_next_line(int fd)
 {
 	if (fd < 0)
 		return (NULL);
+	t_struct	data;
 	static char *str;
+	char *rd;
 	size_t		i;
 	char *newline;
 
@@ -34,13 +36,16 @@ char	*get_next_line(int fd)
 	//	read(fd, str, BUFFER_SIZE);
 	//	str[BUFFER_SIZE] = '\0';
 	//}
-	str = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	read(fd, str, BUFFER_SIZE);
-	str[BUFFER_SIZE] = '\0';
+	rd = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (str[i] != '\n')
+	if (read(fd, rd, BUFFER_SIZE) == 0)
+		return (NULL);
+	rd[BUFFER_SIZE] = '\0';
 	while(str[i] && str[i] != '\n')
 		i++;
+	str = ft_substr(rd, 0, BUFFER_SIZE);
 	newline = ft_substr(str, 0, i);
-	free(str);
+	free(rd);
 	str = ft_substr(str, 0, i);
 	return(newline);
 }
