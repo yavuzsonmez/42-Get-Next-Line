@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 12:31:58 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/21 18:28:49 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/21 19:31:49 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*get_next_line(int fd)
 	char c;
 
 	i = 0;
-	if (fd == - 1)
+	if (fd == -1 || BUFFER_SIZE < 1)
 		return (NULL);
 	if (!arr)
 	{
@@ -42,11 +42,12 @@ char	*get_next_line(int fd)
 		i++;
 	if (arr[fd][i] == '\n')
 	{
-		newline = ft_substr(arr[fd], 0, i);
+		newline = ft_substr(arr[fd], 0, ++i);
 		arr[fd] = ft_substr(arr[fd], i, BUFFER_SIZE - i - 1);
 	}
 	else
 	{
+		c = 'q';
 		while (c != '\n')
 		{
 			if (!read(fd, &c, 1))
@@ -62,16 +63,16 @@ char	*get_next_line(int fd)
 int main(void)
 {
 
-	printf("OPEN MAX %d\n", OPEN_MAX);
+	//printf("OPEN MAX %d\n", OPEN_MAX);
 	int fd1 = open("fd1.txt", O_RDONLY);
 	int fd2 = open("fd2.txt", O_RDONLY);
 	int fd3 = open("fd3.txt", O_RDONLY);
 	char *newline = get_next_line(fd1);
-	printf("%s\n", newline);
+	printf("%s", newline);
 	newline = get_next_line(fd2);
-	printf("%s\n", newline);
-	newline = get_next_line(fd3);
-	printf("%s\n", newline);
+	printf("%s", newline);
+	//newline = get_next_line(fd3);
+	//printf("%s\n", newline);
 	//newline = get_next_line(fd1);
 	//printf("%s\n", newline);
 	//while (newline)
@@ -82,6 +83,7 @@ int main(void)
 	close (fd1);
 	close (fd2);
 	close (fd3);
-	fscanf(stdin, "c");
+	free (newline);
+	//fscanf(stdin, "c");
 	return (0);
 }
