@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 12:24:00 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/20 11:10:12 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/21 14:39:12 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,13 @@
 /*
 *	PROTOTYPES
 */
-char	*get_next_line(int fd);
+
+size_t	ft_strlen(const char *s);
+void	ft_bzero(void *s, size_t n);
+void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+
+char	*get_next_line(int fd);
 
 #endif

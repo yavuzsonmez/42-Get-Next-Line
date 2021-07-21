@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:24:49 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/20 14:01:02 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/21 14:38:21 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,29 @@ size_t	ft_strlen(const char *s)
 	while (s[i] != 0)
 		i++;
 	return (i);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+	{
+		((unsigned char *)s)[i] = 0;
+		i++;
+	}
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*arr;
+
+	arr = malloc(size * nmemb);
+	if (!(arr))
+		return (NULL);
+	ft_bzero(arr, size * nmemb);
+	return (arr);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)

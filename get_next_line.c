@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 12:31:58 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/20 15:27:46 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/21 15:10:46 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ char	*get_next_line(int fd)
 	size_t i;
 	size_t k;
 	static char *str;
-	char *catstr;
 	char *newline;
 	char c;
+	i = 0;
 	k = 0;
 
-	str = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (read(fd, str, BUFFER_SIZE) == 0)
-		return (NULL);
-	str[BUFFER_SIZE] = '\0';
-	catstr = str;
+	if (!str)
+	{
+		str = (char *)ft_calloc(sizeof(char), (BUFFER_SIZE + 1));
+		if (!str || read(fd, str, BUFFER_SIZE) == 0)
+			return (NULL);
+	}
 	while(str[i] && str[i] != '\n')
 	{
 		i++;
@@ -40,14 +41,14 @@ char	*get_next_line(int fd)
 		{
 			if (read(fd, &c, 1) == 0)
 				return (NULL);
-			catstr = ft_strjoin(str, &c);
+			str = ft_strjoin(str, &c);
 		}
 	}
-	newline = ft_substr(catstr, 0, i);
-	str = ft_substr(str, i, BUFFER_SIZE);
-	free(str);
-	if (catstr)
-		free(catstr);
+	newline = ft_substr(str, 0, i);
+	if (i < BUFFER_SIZE)
+		str = ft_substr(str, i, BUFFER_SIZE);
+	if (i == BUFFER_SIZE)
+		free(str);
 	return(newline);
 }
 
