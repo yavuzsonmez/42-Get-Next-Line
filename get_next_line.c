@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 12:31:58 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/22 17:11:17 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/22 17:36:44 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,34 +98,33 @@ char	*get_next_line(int fd)
 	return (newline);
 }
 
-//t main(void)
-//
-//	//printf("OPEN MAX %d\n", OPEN_MAX);
-//	int fd1 = open("fd1.txt", O_RDONLY);
-//	int fd2 = open("fd2.txt", O_RDONLY);
-//	int fd3 = open("fd3.txt", O_RDONLY);
-//	char *newline = get_next_line(fd1);
-//	printf("%s", newline);
-//	newline = get_next_line(fd2);
-//	printf("%s", newline);
-//	newline = get_next_line(fd3);
-//	printf("%s", newline);
-//	newline = get_next_line(fd1);
-//	printf("%s", newline);
-//	newline = get_next_line(fd2);
-//	printf("%s", newline);
-//	newline = get_next_line(fd3);
-//	printf("%s", newline);
-//	//while (newline)
-//	//{
-//	//	printf("%s\n", newline);
-//	//	newline = get_next_line(fd);
-//	//}
-//	close (fd1);
-//	close (fd2);
-//	close (fd3);
-//	free (newline);
-//	//fscanf(stdin, "c");
-//	return (0);
-//	}
-//
+int main(void)
+{
+	//printf("OPEN MAX %d\n", OPEN_MAX);
+	int fd1 = open("fd1.txt", O_RDONLY);
+	int fd2 = open("fd2.txt", O_RDONLY);
+	int fd3 = open("fd3.txt", O_RDONLY);
+	char *newline = get_next_line(fd1);
+	printf("%s", newline);
+	newline = get_next_line(fd2);
+	printf("%s", newline);
+	newline = get_next_line(fd3);
+	printf("%s", newline);
+	newline = get_next_line(fd1);
+	printf("%s", newline);
+	newline = get_next_line(fd2);
+	printf("%s", newline);
+	newline = get_next_line(fd3);
+	printf("%s", newline);
+	//while (newline)
+	//{
+	//	printf("%s\n", newline);
+	//	newline = get_next_line(fd);
+	//}
+	close (fd1);
+	close (fd2);
+	close (fd3);
+	free (newline);
+	//fscanf(stdin, "c");
+	return (0);
+	}
