@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 12:31:58 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/22 12:59:49 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/22 13:26:41 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ char	*get_next_line(int fd)
 		i++;
 	if (arr[fd][i] == '\n')
 	{
-		newline = ft_substr(arr[fd], 0, ++i);
-		arr[fd] = ft_substr(arr[fd], i, BUFFER_SIZE - i - 1);
+		newline = ft_substr(arr[fd], 0, i + 1);
+		arr[fd] = ft_substr(arr[fd], i, BUFFER_SIZE - i);
 	}
 	else
 	{
@@ -62,6 +62,7 @@ char	*get_next_line(int fd)
 			//free(c);
 			//printf("NEWLINE VALUE : %s\n", newline);
 		}
+		arr[fd] = ft_substr(arr[fd], i, BUFFER_SIZE - i);
 	}
 	if (rbytes == 0)
 		free(arr[fd]);
@@ -81,6 +82,8 @@ int main(void)
 	newline = get_next_line(fd3);
 	printf("%s", newline);
 	newline = get_next_line(fd1);
+	printf("%s", newline);
+	newline = get_next_line(fd2);
 	printf("%s", newline);
 	//while (newline)
 	//{
