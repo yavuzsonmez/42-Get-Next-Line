@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 12:31:58 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/22 15:45:05 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/22 17:11:17 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,21 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <limits.h>
+
+void	free_data(char **arr)
+{
+	int i;
+
+	i = 0;
+	if (!arr)
+		return ;
+	while(i <= 4096 - 1)
+	{
+		if (arr[i])
+			free(arr[i++]);
+	}
+	free(arr);
+}
 
 char	*get_next_line(int fd)
 {
@@ -26,8 +41,7 @@ char	*get_next_line(int fd)
 	i = 0;
 	if (fd < 0 || BUFFER_SIZE < 1)
 	{
-		if (arr)
-			free (arr);
+		free_data(arr);
 		return (NULL);
 	}
 	if (!arr)
@@ -42,13 +56,13 @@ char	*get_next_line(int fd)
 		arr[fd] = (char *)ft_calloc(sizeof(char), BUFFER_SIZE + 1);
 		if (!arr[fd])
 		{
-			free(arr);
+			free_data(arr);
 			return (NULL);
 		}
 		rbytes = read(fd, arr[fd], BUFFER_SIZE);
 		if (rbytes < 0)
 		{
-			free(arr);
+			free_data(arr);
 			return (NULL);
 		}
 	}
@@ -68,7 +82,7 @@ char	*get_next_line(int fd)
 			rbytes = read(fd, c, 1);
 			if (rbytes < 0)
 			{
-				free(arr);
+				free_data(arr);
 				return (NULL);
 			}
 			else if (rbytes == 0)
@@ -79,8 +93,8 @@ char	*get_next_line(int fd)
 		free(c);
 		arr[fd] = ft_substr(arr[fd], i, BUFFER_SIZE - i - 1);
 	}
-	//if (rbytes == 0 && arr)
-	//		free(arr);
+	if (rbytes == 0)
+		free_data(arr);
 	return (newline);
 }
 
