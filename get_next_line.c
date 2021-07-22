@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 12:31:58 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/22 11:15:26 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/22 11:51:31 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	*get_next_line(int fd)
 	else
 	{
 		c = (char *)ft_calloc(sizeof(char), 2);
+		newline = ft_substr(arr[fd], 0, ++i);
 		while (*c != '\n')
 		{
 			rbytes = read(fd, c, 1);
@@ -58,8 +59,9 @@ char	*get_next_line(int fd)
 				return (NULL);
 			else if (rbytes == 0)
 				break ;
-			newline = ft_strjoin(arr[fd], c);
+			newline = ft_strjoin(newline, c);
 			//free(c);
+			//printf("NEWLINE VALUE : %s\n", newline);
 		}
 	}
 	if (rbytes == 0)
@@ -75,12 +77,12 @@ int main(void)
 	int fd3 = open("fd3.txt", O_RDONLY);
 	char *newline = get_next_line(fd1);
 	printf("%s", newline);
-	//newline = get_next_line(fd2);
-	//printf("%s", newline);
-	//newline = get_next_line(fd3);
-	//printf("%s\n", newline);
-	//newline = get_next_line(fd1);
-	//printf("%s\n", newline);
+	newline = get_next_line(fd2);
+	printf("%s", newline);
+	newline = get_next_line(fd3);
+	printf("%s", newline);
+	newline = get_next_line(fd1);
+	printf("%s", newline);
 	//while (newline)
 	//{
 	//	printf("%s\n", newline);
