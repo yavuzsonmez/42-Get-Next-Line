@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 12:31:58 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/22 11:51:31 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/22 12:59:49 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,8 @@ char	*get_next_line(int fd)
 		if (rbytes < 0)
 			return (NULL);
 	}
-	while (arr[fd][i])
+	while (arr[fd][i] && arr[fd][i] != '\n')
 		i++;
-	i--;
 	if (arr[fd][i] == '\n')
 	{
 		newline = ft_substr(arr[fd], 0, ++i);
