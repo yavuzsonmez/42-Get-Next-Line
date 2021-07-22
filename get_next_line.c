@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 12:31:58 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/22 13:46:22 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/22 14:09:06 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,6 @@ int main(void)
 	close (fd2);
 	close (fd3);
 	free (newline);
-	//fscanf(stdin, "c");
+	fscanf(stdin, "c");
 	return (0);
 }
