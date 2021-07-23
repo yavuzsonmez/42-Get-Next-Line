@@ -6,14 +6,14 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 12:31:58 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/23 11:27:29 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/23 13:43:11 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
 #include <stdio.h>
 #include <fcntl.h>
-#include <limits.h>
 
 void	free_data(char **arr)
 {
@@ -21,16 +21,23 @@ void	free_data(char **arr)
 
 	i = 0;
 	if (!arr)
+	{
+		printf("Array does not exist\n");
 		return ;
+	}
 	while(i < 4097)
 	{
-		if (arr[i])
+		if (arr[i][0])
 		{
+			printf("i = %d\n", i);
 			free(arr[i]);
 			i++;
 		}
 		else
-			break ;
+		{
+			printf("i = %d\n", i);
+			i++;
+		}
 	}
 	free(arr);
 }
@@ -120,33 +127,35 @@ char	*get_next_line(int fd)
 	return (newline);
 }
 
-//int main(void)
-//{
-//	char *newline;
-//	int fd1 = open("fd1.txt", O_RDONLY);
-//	int fd2 = open("fd2.txt", O_RDONLY);
-//	int fd3 = open("fd3.txt", O_RDONLY);
-//	newline = get_next_line(fd1);
-//	printf("%s", newline);
-//	newline = get_next_line(fd2);
-//	printf("%s", newline);
-//	newline = get_next_line(fd3);
-//	printf("%s", newline);
-//	newline = get_next_line(fd1);
-//	printf("%s", newline);
-//	newline = get_next_line(fd2);
-//	printf("%s", newline);
-//	newline = get_next_line(fd3);
-//	printf("%s", newline);
-//	//while (newline)
-//	//{
-//	//	printf("%s\n", newline);
-//	//	newline = get_next_line(fd);
-//	//}
-//	//close (fd1);
-//	//close (fd2);
-//	//close (fd3);
-//	//free (newline);
-//	//fscanf(stdin, "c");
-//	return (0);
-//}
+int main(void)
+{
+	char *newline;
+	int fd1 = open("fd1.txt", O_RDONLY);
+	int fd2 = open("fd2.txt", O_RDONLY);
+	int fd3 = open("fd3.txt", O_RDONLY);
+	newline = get_next_line(fd1);
+	printf("%s", newline);
+	newline = get_next_line(fd2);
+	printf("%s", newline);
+	newline = get_next_line(fd3);
+	printf("%s", newline);
+	newline = get_next_line(fd1);
+	printf("%s", newline);
+	newline = get_next_line(fd2);
+	printf("%s", newline);
+	newline = get_next_line(fd3);
+	printf("%s", newline);
+	//newline = get_next_line(-1);
+	//printf("%s", newline);
+	//while (newline)
+	//{
+	//	printf("%s\n", newline);
+	//	newline = get_next_line(fd);
+	//}
+	//close (fd1);
+	//close (fd2);
+	//close (fd3);
+	//free (newline);
+	//fscanf(stdin, "c");
+	return (0);
+}
