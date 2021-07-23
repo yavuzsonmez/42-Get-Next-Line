@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:24:49 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/22 17:41:20 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/23 14:57:02 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,19 @@ void	ft_bzero(void *s, size_t n)
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*arr;
+	size_t	i;
+	size_t	n;
 
-	arr = malloc(size * nmemb);
+	i = 0;
+	n = size * nmemb;
+	arr = malloc(n);
 	if (!(arr))
 		return (NULL);
-	ft_bzero(arr, size * nmemb);
+	while (i < n)
+	{
+		((unsigned char *)arr)[i] = 0;
+		i++;
+	}
 	return (arr);
 }
 
