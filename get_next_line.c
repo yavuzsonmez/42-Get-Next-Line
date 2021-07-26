@@ -18,25 +18,44 @@ char	*ft_strchr(const char *s, int c)
 char	*get_next_line(int fd)
 {
 	size_t i;
-	int	r;
 	static char *arr[4096];
 	char *newline;
-	char *tmp;
+	char tmp[BUFFER_SIZE + 1];
 
-	i = 0;
-	if (fd < 0 || BUFFER_SIZE < 1 || fd >= 4096)
+	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	arr[4096] = NULL;
-	while(!ft_strchr(arr[fd], '\n'))
+	if (arr[fd] == NULL)
 	{
 		tmp = (char *)ft_calloc(sizeof(char), BUFFER_SIZE + 1);
-		r = read(fd, tmp, BUFFER_SIZE);
-		if ()
+		read(fd, tmp, BUFFER_SIZE);
+		arr[fd] = tmp;
+	}
+	while (arr[fd][i] && arr[fd][i] != '\n')
+		i++;
+	if (ft_strchr(arr[fd], '\n'))
+	{
+		newline = ft_substr(arr[fd], 0, i + 1);
+		tmp = ft_substr(arr[fd], 0, BUFFER_SIZE + 1);
+		arr[fd] = tmp;
 		free(tmp);
 	}
+	else
+	{
+		while (!ft_strchr(arr[fd], '\n'))
+		{
+			if (read(fd, tmp, BUFFER_SIZE) > 0)
+				arr[fd] = ft_strjoin(arr[fd], tmp);
+			free(tmp);
+		}
+		i = 0;
+		while (arr[fd][i] && arr[fd][i] != '\n')
+			i++;
+		newline = ft_substr(arr[fd], 0, i + 1);
+		arr[fd] = ft_substr(arr[fd], i + 1, BUFFER_SIZE - i - 1);
+	}
 	return (newline);
+	return (arr[fd]);
 }
-
 
 int main(void)
 {
