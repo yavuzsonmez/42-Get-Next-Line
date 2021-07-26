@@ -1,35 +1,7 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/25 12:31:58 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/23 16:06:59 by ysonmez          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "get_next_line.h"
 
 #include <stdio.h>
 #include <fcntl.h>
-
-void	free_data(char **arr)
-{
-	int i;
-
-	i = 0;
-	if (!arr)
-		return ;
-	while(i < 4096)
-	{
-		if (arr[i])
-			free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -46,104 +18,34 @@ char	*ft_strchr(const char *s, int c)
 char	*get_next_line(int fd)
 {
 	size_t i;
-	int	rbytes;
-	static char **arr;
+	int	r;
+	static char *arr[4096];
 	char *newline;
-	char *str;
-	char *ptr;
+	char *tmp;
 
 	i = 0;
-	if (fd < 0 || BUFFER_SIZE < 1)
-	{
-		free_data(arr);
+	if (fd < 0 || BUFFER_SIZE < 1 || fd >= 4096)
 		return (NULL);
-	}
-	if (!arr)
+	arr[4096] = NULL;
+	while(!ft_strchr(arr[fd], '\n'))
 	{
-		arr = (char **)ft_calloc(sizeof(char *), 4096 + 1);
-		if (!arr)
-			return (NULL);
+		tmp = (char *)ft_calloc(sizeof(char), BUFFER_SIZE + 1);
+		r = read(fd, tmp, BUFFER_SIZE);
+		if ()
+		free(tmp);
 	}
-	if (!arr[fd])
-	{
-		arr[fd] = (char *)ft_calloc(sizeof(char), BUFFER_SIZE + 1);
-		if (!arr[fd])
-		{
-			free_data(arr);
-			return (NULL);
-		}
-		rbytes = read(fd, arr[fd], BUFFER_SIZE);
-		if (rbytes < 0)
-		{
-			free_data(arr);
-			return (NULL);
-		}
-	}
-	while (arr[fd][i] && arr[fd][i] != '\n')
-		i++;
-	if (arr[fd][i] == '\n')
-	{
-		newline = ft_substr(arr[fd], 0, i + 1);
-		arr[fd] = ft_substr(arr[fd], i + 1, BUFFER_SIZE - i - 1);
-	}
-	else
-	{
-		ptr = NULL;
-		while (!ptr)
-		{
-			ptr = ft_strchr(arr[fd], '\n');
-			str = (char *)ft_calloc(sizeof(char), BUFFER_SIZE + 1);
-			rbytes = read(fd, str, BUFFER_SIZE);
-			if (rbytes < 0)
-			{
-				free_data(arr);
-				return (NULL);
-			}
-			else if (rbytes == 0)
-					break ;
-			arr[fd] = ft_strjoin(arr[fd], str);
-			free(str);
-		}
-		i = 0;
-		while (arr[fd][i] && arr[fd][i] != '\n')
-			i++;
-		newline = ft_substr(arr[fd], 0, i + 1);
-		arr[fd] = ft_substr(arr[fd], i + 1, BUFFER_SIZE - i - 1);
-	}
-	if (rbytes == 0)
-		free_data(arr);
 	return (newline);
 }
+
 
 int main(void)
 {
 	char *newline;
 	int fd1 = open("fd1.txt", O_RDONLY);
-	int fd2 = open("fd2.txt", O_RDONLY);
-	int fd3 = open("fd3.txt", O_RDONLY);
+	//int fd2 = open("fd2.txt", O_RDONLY);
+	//int fd3 = open("fd3.txt", O_RDONLY);
 	newline = get_next_line(fd1);
 	printf("%s", newline);
-	newline = get_next_line(fd2);
-	printf("%s", newline);
-	newline = get_next_line(fd3);
-	printf("%s", newline);
-	newline = get_next_line(fd1);
-	printf("%s", newline);
-	newline = get_next_line(fd2);
-	printf("%s", newline);
-	newline = get_next_line(fd3);
-	printf("%s", newline);
-	//newline = get_next_line(-1);
-	//printf("%s", newline);
-	//while (newline)
-	//{
-	//	printf("%s\n", newline);
-	//	newline = get_next_line(fd);
-	//}
-	//close (fd1);
-	//close (fd2);
-	//close (fd3);
-	//free (newline);
-	//fscanf(stdin, "c");
+	close (fd1);
 	return (0);
 }
