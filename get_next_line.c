@@ -6,13 +6,17 @@
 char	*get_next_line(int fd)
 {
 	static char *arr[4096];
-	t_data *data;
+	char buff[BUFFER_SIZE + 1];
+	char *newline;
+	char *tmp;
+	int r;
+	int i;
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
 	if (arr[fd] == NULL)
 	{
-		data->r = read(fd, buff, BUFFER_SIZE);
+		r = read(fd, buff, BUFFER_SIZE);
 		buff[r] = '\0';
 		arr[fd] = ft_strdup(buff);
 	}
@@ -46,35 +50,35 @@ char	*get_next_line(int fd)
 	return (newline);
 }
 
-//int main(void)
-//{
-//	char *newline;
-//	int fd1 = open("fd1.txt", O_RDONLY);
-//	int fd2 = open("fd2.txt", O_RDONLY);
-//	int fd3 = open("fd3.txt", O_RDONLY);
-//	newline = get_next_line(fd1);
-//	printf("%s", newline);
-//	newline = get_next_line(fd2);
-//	printf("%s", newline);
-//	newline = get_next_line(fd3);
-//	printf("%s", newline);
-//	newline = get_next_line(fd1);
-//	printf("%s", newline);
-//	newline = get_next_line(fd2);
-//	printf("%s", newline);
-//	newline = get_next_line(fd3);
-//	printf("%s", newline);
-//	newline = get_next_line(-1);
-//	printf("%s", newline);
-//	//while (newline)
-//	//{
-//	//	printf("%s\n", newline);
-//	//	newline = get_next_line(fd);
-//	//}
-//	close (fd1);
-//	close (fd2);
-//	close (fd3);
-//	//free (newline);
-//	//fscanf(stdin, "c");
-//	return (0);
-//}
+int main(void)
+{
+	char *newline;
+	int fd1 = open("fd1.txt", O_RDONLY);
+	int fd2 = open("fd2.txt", O_RDONLY);
+	int fd3 = open("fd3.txt", O_RDONLY);
+	newline = get_next_line(fd1);
+	printf("%s", newline);
+	newline = get_next_line(fd2);
+	printf("%s", newline);
+	newline = get_next_line(fd3);
+	printf("%s", newline);
+	newline = get_next_line(fd1);
+	printf("%s", newline);
+	newline = get_next_line(fd2);
+	printf("%s", newline);
+	newline = get_next_line(fd3);
+	printf("%s", newline);
+	newline = get_next_line(-1);
+	printf("%s", newline);
+	//while (newline)
+	//{
+	//	printf("%s\n", newline);
+	//	newline = get_next_line(fd);
+	//}
+	close (fd1);
+	close (fd2);
+	close (fd3);
+	//free (newline);
+	//fscanf(stdin, "c");
+	return (0);
+}
