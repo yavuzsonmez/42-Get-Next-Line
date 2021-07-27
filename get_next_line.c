@@ -6,47 +6,43 @@
 char	*get_next_line(int fd)
 {
 	static char *arr[4096];
-	char buff[BUFFER_SIZE + 1];
-	char *newline;
-	char *tmp;
-	int r;
-	int i;
+	t_data data;
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
 	if (arr[fd] == NULL)
 	{
-		r = read(fd, buff, BUFFER_SIZE);
-		buff[r] = '\0';
-		arr[fd] = ft_strdup(buff);
+		data.r = read(fd, data.buff, BUFFER_SIZE);
+		data.buff[data.r] = '\0';
+		arr[fd] = ft_strdup(data.buff);
 	}
-	i = ft_strchr_pos(arr[fd], '\n');
-	if (i >= 0)
+	data.i = ft_strchr_pos(arr[fd], '\n');
+	if (data.i >= 0)
 	{
-		newline = ft_substr(arr[fd], 0, i + 1);
-		tmp = ft_substr(arr[fd], i + 1, BUFFER_SIZE - i - 1);
+		data.newline = ft_substr(arr[fd], 0, data.i + 1);
+		data.tmp = ft_substr(arr[fd], data.i + 1, BUFFER_SIZE - data.i - 1);
 		free(arr[fd]);
-		arr[fd] = tmp;
+		arr[fd] = data.tmp;
 	}
 	else
 	{
-		r = read(fd, buff, BUFFER_SIZE);
-		while (r > 0)
+		data.r = read(fd, data.buff, BUFFER_SIZE);
+		while (data.r > 0)
 		{
-			tmp = ft_strjoin(arr[fd], buff);
+			data.tmp = ft_strjoin(arr[fd], data.buff);
 			free(arr[fd]);
-			arr[fd] = tmp;
-			i = ft_strchr_pos(arr[fd], '\n');
-			if (i >= 0)
+			arr[fd] = data.tmp;
+			data.i = ft_strchr_pos(arr[fd], '\n');
+			if (data.i >= 0)
 				break ;
-			r = read(fd, buff, BUFFER_SIZE);
+			data.r = read(fd, data.buff, BUFFER_SIZE);
 		}
-		newline = ft_substr(arr[fd], 0, i + 1);
-		arr[fd] = ft_substr(arr[fd], i + 1, BUFFER_SIZE - i - 1);
+		data.newline = ft_substr(arr[fd], 0, data.i + 1);
+		arr[fd] = ft_substr(arr[fd], data.i + 1, BUFFER_SIZE - data.i - 1);
 	}
-	if (r == 0)
+	if (data.r == 0)
 		free(arr[fd]);
-	return (newline);
+	return (data.newline);
 }
 
 int main(void)
