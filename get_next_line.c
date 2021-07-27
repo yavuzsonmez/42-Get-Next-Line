@@ -41,7 +41,6 @@ char	*get_next_line(int fd)
 				break ;
 			r = read(fd, buff, BUFFER_SIZE);
 		}
-		if (r == 0)
 		newline = ft_substr(arr[fd], 0, i + 1);
 		arr[fd] = ft_substr(arr[fd], i + 1, BUFFER_SIZE - i - 1);
 	}
