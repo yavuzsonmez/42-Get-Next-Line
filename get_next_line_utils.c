@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:24:49 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/23 14:57:02 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/27 11:20:21 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,35 +22,34 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-void	ft_bzero(void *s, size_t n)
+int	ft_strchr_pos(const char *s, int c)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (i < n)
-	{
-		((unsigned char *)s)[i] = 0;
+	while (s[i] && s[i] != c)
 		i++;
-	}
+	if (s[i] == c)
+		return (i);
+	return (-1);
 }
 
-void	*ft_calloc(size_t nmemb, size_t size)
+char	*ft_strdup(const char *s)
 {
-	void	*arr;
 	size_t	i;
-	size_t	n;
+	char	*ss;
 
 	i = 0;
-	n = size * nmemb;
-	arr = malloc(n);
-	if (!(arr))
+	ss = (char *)malloc(sizeof(char) * ft_strlen(s) + 1);
+	if (!ss)
 		return (NULL);
-	while (i < n)
+	while (s[i])
 	{
-		((unsigned char *)arr)[i] = 0;
+		ss[i] = s[i];
 		i++;
 	}
-	return (arr);
+	ss[i] = 0;
+	return (ss);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)

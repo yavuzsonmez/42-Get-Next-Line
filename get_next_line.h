@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 12:24:00 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/23 14:57:13 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/27 13:01:53 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,24 @@
 
 size_t	ft_strlen(const char *s);
 void	*ft_calloc(size_t nmemb, size_t size);
+char	*ft_strdup(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strchr(const char *s, int c);
+int		ft_strchr_pos(const char *s, int c);
 
 char	*get_next_line(int fd);
+
+/*
+*	DATA STRUCT
+*/
+
+typedef struct s_data
+{
+	char *newline;
+	char buff[BUFFER_SIZE + 1];
+	char *tmp;
+	int r;
+	int i;
+}	t_data;
 
 #endif
