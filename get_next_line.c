@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 13:32:38 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/28 14:13:11 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/28 16:35:07 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ char	*get_next_line(int fd)
 		data.i = ft_strchr_pos(arr[fd], '\n');
 	}
 	data.newline = ft_substr(arr[fd], 0, data.i + 1);
-	data.tmp = ft_substr(arr[fd], data.i + 1, BUFFER_SIZE - data.i);
+	data.tmp = ft_substr(arr[fd], data.i + 1, data.r - data.i);
 	free(arr[fd]);
 	arr[fd] = data.tmp;
+	if (data.r == 0 && arr[fd][0] == '\0')
+		free(arr[fd]);
 	return (data.newline);
 }
 
@@ -82,4 +84,3 @@ char	*get_next_line(int fd)
 //	//fscanf(stdin, "c");
 //	return (0);
 //}
-
