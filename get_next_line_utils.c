@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:24:49 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/27 11:20:21 by ubuntu           ###   ########.fr       */
+/*   Updated: 2021/07/28 13:40:12 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+/*
+*	Return the string length
+*/
 
 size_t	ft_strlen(const char *s)
 {
@@ -21,6 +25,10 @@ size_t	ft_strlen(const char *s)
 		i++;
 	return (i);
 }
+
+/*
+*	Return the index of the found character in the string
+*/
 
 int	ft_strchr_pos(const char *s, int c)
 {
@@ -33,6 +41,10 @@ int	ft_strchr_pos(const char *s, int c)
 		return (i);
 	return (-1);
 }
+
+/*
+*	Take a string as input, allocate memory for a copy of it and copy
+*/
 
 char	*ft_strdup(const char *s)
 {
@@ -51,6 +63,10 @@ char	*ft_strdup(const char *s)
 	ss[i] = 0;
 	return (ss);
 }
+
+/*
+*	Take 2 strings as inputs and concatenate them in a new allocated string
+*/
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -79,6 +95,11 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	s[i] = 0;
 	return (s);
 }
+
+/*
+*	Create a allocated substring based on a string,
+*	start index on this string and number of bytes to copy
+*/
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
