@@ -13,6 +13,8 @@ char	*get_next_line(int fd)
 	if (arr[fd] == NULL)
 	{
 		data.r = read(fd, data.buff, BUFFER_SIZE);
+		if (data.r == -1 || data.r == 0)
+			return (NULL);
 		data.buff[data.r] = '\0';
 		arr[fd] = ft_strdup(data.buff);
 	}
@@ -20,13 +22,15 @@ char	*get_next_line(int fd)
 	if (data.i >= 0)
 	{
 		data.newline = ft_substr(arr[fd], 0, data.i + 1);
-		data.tmp = ft_substr(arr[fd], data.i + 1, BUFFER_SIZE - data.i - 1);
+		data.tmp = ft_substr(arr[fd], data.i + 1, BUFFER_SIZE - data.i);
 		free(arr[fd]);
 		arr[fd] = data.tmp;
 	}
 	else
 	{
 		data.r = read(fd, data.buff, BUFFER_SIZE);
+		if (data.r == -1)
+			return (NULL);
 		while (data.r > 0)
 		{
 			data.tmp = ft_strjoin(arr[fd], data.buff);
@@ -36,44 +40,47 @@ char	*get_next_line(int fd)
 			if (data.i >= 0)
 				break ;
 			data.r = read(fd, data.buff, BUFFER_SIZE);
+			if (data.r == -1)
+				return (NULL);
 		}
 		data.newline = ft_substr(arr[fd], 0, data.i + 1);
-		arr[fd] = ft_substr(arr[fd], data.i + 1, BUFFER_SIZE - data.i - 1);
+		arr[fd] = ft_substr(arr[fd], data.i + 1, BUFFER_SIZE - data.i);
 	}
 	if (data.r == 0)
 		free(arr[fd]);
 	return (data.newline);
 }
 
-int main(void)
-{
-	char *newline;
-	int fd1 = open("fd1.txt", O_RDONLY);
-	int fd2 = open("fd2.txt", O_RDONLY);
-	int fd3 = open("fd3.txt", O_RDONLY);
-	newline = get_next_line(fd1);
-	printf("%s", newline);
-	newline = get_next_line(fd2);
-	printf("%s", newline);
-	newline = get_next_line(fd3);
-	printf("%s", newline);
-	newline = get_next_line(fd1);
-	printf("%s", newline);
-	newline = get_next_line(fd2);
-	printf("%s", newline);
-	newline = get_next_line(fd3);
-	printf("%s", newline);
-	newline = get_next_line(-1);
-	printf("%s", newline);
-	//while (newline)
-	//{
-	//	printf("%s\n", newline);
-	//	newline = get_next_line(fd);
-	//}
-	close (fd1);
-	close (fd2);
-	close (fd3);
-	//free (newline);
-	//fscanf(stdin, "c");
-	return (0);
-}
+//int main(void)
+//{
+//	char *newline;
+//	int fd1 = open("fd1.txt", O_RDONLY);
+//	int fd2 = open("fd2.txt", O_RDONLY);
+//	int fd3 = open("fd3.txt", O_RDONLY);
+//	newline = get_next_line(fd1);
+//	printf("%s", newline);
+//	newline = get_next_line(fd2);
+//	printf("%s", newline);
+//	newline = get_next_line(fd3);
+//	printf("%s", newline);
+//	newline = get_next_line(fd1);
+//	printf("%s", newline);
+//	newline = get_next_line(fd2);
+//	printf("%s", newline);
+//	newline = get_next_line(fd3);
+//	printf("%s", newline);
+//	newline = get_next_line(-1);
+//	printf("%s", newline);
+//	//while (newline)
+//	//{
+//	//	printf("%s\n", newline);
+//	//	newline = get_next_line(fd);
+//	//}
+//	close (fd1);
+//	close (fd2);
+//	close (fd3);
+//	//free (newline);
+//	//fscanf(stdin, "c");
+//	return (0);
+//}
+//
