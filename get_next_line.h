@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 12:24:00 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/28 13:33:05 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/28 17:26:14 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_data
 {
 	char	buff[BUFFER_SIZE + 1];
 	char	*newline;
-	char	*tmp;
 	int		r;
 	int		i;
 }	t_data;
