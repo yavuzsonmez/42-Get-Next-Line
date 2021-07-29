@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 13:32:38 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/29 14:45:13 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/29 17:59:20 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,51 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-static char *new_line(char *strfd, t_data *data)
+static void	new_line(char **arr, t_data *data, int fd)
 {
-	data->newline = ft_substr(strfd, 0, data->i + 1);
-	data->buff = ft_substr(strfd, data->i + 1, ft_strlen(strfd - data->i));
-	free(strfd);
-	strfd = data->buff;
-	return (data->newline);
+	data->newline = ft_substr(arr[fd], 0, data->i + 1);
+	data->buff = ft_substr(arr[fd], data->i + 1, ft_strlen(arr[fd]) - data->i);
+	free(arr[fd]);
+	arr[fd] = ft_strdup(data->buff);
+	free(data->buff);
+}
+
+static int	reader(char **arr, t_data *data, int fd)
+{
+	if (arr[fd] == NULL)
+	{
+		data->buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (data->buff == NULL)
+			return(0);
+		data->r = read(fd, data->buff, BUFFER_SIZE);
+		if (data->r == -1 || data->r == 0)
+		{
+			free(data->buff);
+			return (0);
+		}
+		data->buff[data->r] = '\0';
+		arr[fd] = ft_strdup(data->buff);
+		free(data->buff);
+	}
+	else
+	{
+		data->buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (data->buff == NULL)
+			return(0);
+		data->r = read(fd, data->buff, BUFFER_SIZE);
+		if (data->r == -1 || data->r == 0)
+		{
+			free(data->buff);
+			return (0);
+		}
+		data->buff[data->r] = '\0';
+		data->newline = ft_strjoin(arr[fd], data->buff);
+		free(data->buff);
+		free(arr[fd]);
+		arr[fd] = ft_strdup(data->newline);
+		free(data->newline);
+	}
+	return (1);
 }
 
 char	*get_next_line(int fd)
@@ -33,27 +71,21 @@ char	*get_next_line(int fd)
 		return (NULL);
 	data.r = 1;
 	if (arr[fd] == NULL)
-	{
-		data.buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		data.r = read(fd, data.buff, BUFFER_SIZE);
-		if (data.r == -1 || data.r == 0)
-			return (NULL);
-		data.buff[data.r] = '\0';
-		arr[fd] = ft_strdup(data.buff);
-		free(data.buff);
-	}
+		reader(arr, &data, fd);
 	data.i = ft_strchr_pos(arr[fd], '\n');
-	if (data.i >= 0)
-		return(new_line(arr[fd], &data));
-	//while (data.r > 0)
+	new_line(arr, &data, fd);
+	return (data.newline);
+	//while (data.r > 0 && data.i < 0)
 	//{
-	//	else if (data.i == -1)
+	//	reader(arr[fd], &data, &fd);
+	//	data.i = ft_strchr_pos(arr[fd], '\n');
+	//	if (data.i >= 0)
 	//	{
-	//		data.buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	//		data.r = read(fd, data.buff, BUFFER_SIZE);
+	//		new_line(arr[fd], &data);
+	//		return (data.newline);
 	//	}
 	//}
-	return (NULL);
+	//return (NULL);
 }
 
 int main(void)
@@ -71,14 +103,14 @@ int main(void)
 	printf("%s", newline);
 	newline = get_next_line(fd3);
 	printf("%s", newline);
-	//newline = get_next_line(fd1);
-	//printf("%s", newline);
-	//newline = get_next_line(fd2);
-	//printf("%s", newline);
-	//newline = get_next_line(fd3);
-	//printf("%s", newline);
-	//newline = get_next_line(-1);
-	//printf("%s", newline);
+	newline = get_next_line(fd1);
+	printf("%s", newline);
+	newline = get_next_line(fd2);
+	printf("%s", newline);
+	newline = get_next_line(fd3);
+	printf("%s", newline);
+	newline = get_next_line(-1);
+	printf("%s", newline);
 	//while (newline)
 	//{
 	//	printf("%s\n", newline);
