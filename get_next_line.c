@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 13:32:38 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/29 12:27:55 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/29 14:45:13 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 #include <stdio.h>
 #include <fcntl.h>
 
+static char *new_line(char *strfd, t_data *data)
+{
+	data->newline = ft_substr(strfd, 0, data->i + 1);
+	data->buff = ft_substr(strfd, data->i + 1, ft_strlen(strfd - data->i));
+	free(strfd);
+	strfd = data->buff;
+	return (data->newline);
+}
+
 char	*get_next_line(int fd)
 {
 	static char *arr[4096];
@@ -22,6 +31,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
+	data.r = 1;
 	if (arr[fd] == NULL)
 	{
 		data.buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
@@ -32,49 +42,18 @@ char	*get_next_line(int fd)
 		arr[fd] = ft_strdup(data.buff);
 		free(data.buff);
 	}
-	data.r = 1;
-	while (data.r > 0)
-	{
-		data.i = ft_strchr_pos(arr[fd], '\n');
-		if (data.i >= 0)
-		{
-			data.newline = ft_substr(arr[fd], 0, data.i + 1);
-			data.buff = ft_substr(arr[fd], data.i + 1, data.r - data.i);
-			free(arr[fd]);
-			arr[fd] = ft_strdup(data.buff);
-			free(data.buff);
-			break ;
-		}
-		else
-		{
-			data.buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-			data.r = read(fd, data.buff, BUFFER_SIZE);
-			if (data.r == -1)
-			{
-				free(arr[fd]);
-				free(data.buff);
-				return (NULL);
-			}
-			else if (data.r == 0)
-				break ;
-			else
-			{
-				data.newline = ft_strjoin(arr[fd], data.buff);
-				free(arr[fd]);
-				free(data.buff);
-				arr[fd] = data.newline;
-			}
-		}
-	}
-
-	if (data.r == 0 && arr[fd])
-	{
-		data.newline = ft_substr(arr[fd], 0, ft_strlen(arr[fd]));
-		free(arr[fd]);
-	}
-	else if (data.r == 0 && arr[fd] == NULL)
-		return (NULL);
-	return (data.newline);
+	data.i = ft_strchr_pos(arr[fd], '\n');
+	if (data.i >= 0)
+		return(new_line(arr[fd], &data));
+	//while (data.r > 0)
+	//{
+	//	else if (data.i == -1)
+	//	{
+	//		data.buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	//		data.r = read(fd, data.buff, BUFFER_SIZE);
+	//	}
+	//}
+	return (NULL);
 }
 
 int main(void)
@@ -86,28 +65,26 @@ int main(void)
 	int fd3 = open("fd3.txt", O_RDONLY);
 	newline = get_next_line(fdi);
 	printf("%s", newline);
-	newline = get_next_line(fdi);
-	printf("%s", newline);
 	newline = get_next_line(fd1);
 	printf("%s", newline);
 	newline = get_next_line(fd2);
 	printf("%s", newline);
 	newline = get_next_line(fd3);
 	printf("%s", newline);
-	newline = get_next_line(fd1);
-	printf("%s", newline);
-	newline = get_next_line(fd2);
-	printf("%s", newline);
-	newline = get_next_line(fd3);
-	printf("%s", newline);
-	newline = get_next_line(-1);
-	printf("%s", newline);
+	//newline = get_next_line(fd1);
+	//printf("%s", newline);
+	//newline = get_next_line(fd2);
+	//printf("%s", newline);
+	//newline = get_next_line(fd3);
+	//printf("%s", newline);
+	//newline = get_next_line(-1);
+	//printf("%s", newline);
 	//while (newline)
 	//{
 	//	printf("%s\n", newline);
 	//	newline = get_next_line(fd);
 	//}
-	//close(fdi);
+	close(fdi);
 	close (fd1);
 	close (fd2);
 	close (fd3);
