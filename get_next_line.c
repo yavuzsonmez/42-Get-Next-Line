@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 13:32:38 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/29 17:59:20 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/29 18:11:18 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,24 @@ char	*get_next_line(int fd)
 	data.i = ft_strchr_pos(arr[fd], '\n');
 	new_line(arr, &data, fd);
 	return (data.newline);
-	//while (data.r > 0 && data.i < 0)
-	//{
-	//	reader(arr[fd], &data, &fd);
-	//	data.i = ft_strchr_pos(arr[fd], '\n');
-	//	if (data.i >= 0)
-	//	{
-	//		new_line(arr[fd], &data);
-	//		return (data.newline);
-	//	}
-	//}
+	while (data.r > 0)
+	{
+		printf("%s\n", arr[fd]);
+		reader(arr, &data, fd);
+		data.i = ft_strchr_pos(arr[fd], '\n');
+		if (data.i >= 0)
+		{
+			new_line(arr, &data, fd);
+			return (data.newline);
+		}
+		if (data.r == 0)
+		{
+			data.i = ft_strlen(arr[fd]);
+			new_line(arr, &data, fd);
+			free(arr[fd]);
+			return (data.newline);
+		}
+	}
 	//return (NULL);
 }
 
