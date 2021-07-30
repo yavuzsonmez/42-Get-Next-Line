@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 13:32:38 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/30 14:58:48 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/30 16:07:48 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	reader(char **arr, t_data *data, int fd)
 	{
 		data->buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (data->buff == NULL)
-			return(0);
+			return (0);
 		data->r = read(fd, data->buff, BUFFER_SIZE);
 		if (data->r == -1 || data->r == 0)
 		{
@@ -94,7 +94,7 @@ char	*get_next_line(int fd)
 	data.r = 1;
 	while (data.r > 0)
 	{
-		if (!reader(arr, &data, fd))
+		if (!reader(arr, &data, fd) && arr[fd] == NULL)
 			return (NULL);
 		data.i = ft_strchr_pos(arr[fd], '\n');
 		if (data.i >= 0)
@@ -107,14 +107,14 @@ char	*get_next_line(int fd)
 			data.i = ft_strlen(arr[fd]);
 			new_line(arr, &data, fd);
 			free(arr[fd]);
+			arr[fd] = NULL;
 			return (data.newline);
 		}
-
 	}
 	return (NULL);
 }
 
-
+/*
 int main(void)
 {
 	char *newline;
@@ -175,3 +175,4 @@ int main(void)
 	//fscanf(stdin, "c");
 	return (0);
 }
+*/
