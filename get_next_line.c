@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 13:32:38 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/29 18:11:18 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/30 14:58:48 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,21 @@
 
 static void	new_line(char **arr, t_data *data, int fd)
 {
-	data->newline = ft_substr(arr[fd], 0, data->i + 1);
-	data->buff = ft_substr(arr[fd], data->i + 1, ft_strlen(arr[fd]) - data->i);
-	free(arr[fd]);
-	arr[fd] = ft_strdup(data->buff);
-	free(data->buff);
+	if (data->i >= 0)
+	{
+		data->newline = ft_substr(arr[fd], 0, data->i + 1);
+		data->buff = ft_substr(arr[fd], data->i + 1, ft_strlen(arr[fd]) - data->i);
+		free(arr[fd]);
+		arr[fd] = NULL;
+		arr[fd] = ft_strdup(data->buff);
+		free(data->buff);
+	}
+	else
+	{
+		data->newline = ft_strdup(arr[fd]);
+		free(arr[fd]);
+		arr[fd] = NULL;
+	}
 }
 
 static int	reader(char **arr, t_data *data, int fd)
@@ -56,6 +66,7 @@ static int	reader(char **arr, t_data *data, int fd)
 		data->newline = ft_strjoin(arr[fd], data->buff);
 		free(data->buff);
 		free(arr[fd]);
+		arr[fd] = NULL;
 		arr[fd] = ft_strdup(data->newline);
 		free(data->newline);
 	}
@@ -69,16 +80,22 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	data.r = 1;
 	if (arr[fd] == NULL)
-		reader(arr, &data, fd);
+	{
+		if (!reader(arr, &data, fd))
+			return (NULL);
+	}
 	data.i = ft_strchr_pos(arr[fd], '\n');
-	new_line(arr, &data, fd);
-	return (data.newline);
+	if (data.i >= 0 || data.r < BUFFER_SIZE)
+	{
+		new_line(arr, &data, fd);
+		return (data.newline);
+	}
+	data.r = 1;
 	while (data.r > 0)
 	{
-		printf("%s\n", arr[fd]);
-		reader(arr, &data, fd);
+		if (!reader(arr, &data, fd))
+			return (NULL);
 		data.i = ft_strchr_pos(arr[fd], '\n');
 		if (data.i >= 0)
 		{
@@ -92,42 +109,68 @@ char	*get_next_line(int fd)
 			free(arr[fd]);
 			return (data.newline);
 		}
+
 	}
-	//return (NULL);
+	return (NULL);
 }
+
 
 int main(void)
 {
 	char *newline;
+	//int fde = open("fde.txt", O_RDONLY);
 	int fdi = open("fdi.txt", O_RDONLY);
-	int fd1 = open("fd1.txt", O_RDONLY);
-	int fd2 = open("fd2.txt", O_RDONLY);
-	int fd3 = open("fd3.txt", O_RDONLY);
+	//int fd1 = open("fd1.txt", O_RDONLY);
+	//int fd2 = open("fd2.txt", O_RDONLY);
+	//int fd3 = open("fd3.txt", O_RDONLY);
+	//newline = get_next_line(1000);
+	//printf("%s", newline);
 	newline = get_next_line(fdi);
 	printf("%s", newline);
-	newline = get_next_line(fd1);
+	newline = get_next_line(fdi);
 	printf("%s", newline);
-	newline = get_next_line(fd2);
-	printf("%s", newline);
-	newline = get_next_line(fd3);
-	printf("%s", newline);
-	newline = get_next_line(fd1);
-	printf("%s", newline);
-	newline = get_next_line(fd2);
-	printf("%s", newline);
-	newline = get_next_line(fd3);
-	printf("%s", newline);
-	newline = get_next_line(-1);
-	printf("%s", newline);
+	//newline = get_next_line(fd1);
+	//printf("%s", newline);
+	//newline = get_next_line(fd2);
+	//printf("%s", newline);
+	//newline = get_next_line(fd3);
+	//printf("%s", newline);
+	//newline = get_next_line(fd1);
+	//printf("%s", newline);
+	//newline = get_next_line(fd2);
+	//printf("%s", newline);
+	//newline = get_next_line(fd3);
+	//printf("%s", newline);
+	//newline = get_next_line(-1);
+	//printf("%s", newline);
+	//newline = get_next_line(fd1);
+	//printf("%s", newline);
+	//newline = get_next_line(fd2);
+	//printf("%s", newline);
+	//newline = get_next_line(fd3);
+	//printf("%s", newline);
+	//newline = get_next_line(fd1);
+	//printf("%s", newline);
+	//newline = get_next_line(fd2);
+	//printf("%s", newline);
+	//newline = get_next_line(fd3);
+	//printf("%s", newline);
+	//newline = get_next_line(fd1);
+	//printf("%s", newline);
+	//newline = get_next_line(fd2);
+	//printf("%s", newline);
+	//newline = get_next_line(fd3);
+	//printf("%s", newline);
 	//while (newline)
 	//{
 	//	printf("%s\n", newline);
 	//	newline = get_next_line(fd);
 	//}
+	//close(fde);
 	close(fdi);
-	close (fd1);
-	close (fd2);
-	close (fd3);
+	//close (fd1);
+	//close (fd2);
+	//close (fd3);
 	////free (newline);
 	//fscanf(stdin, "c");
 	return (0);
