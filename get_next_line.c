@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 13:32:38 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/30 16:07:48 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/30 16:44:14 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,65 +114,39 @@ char	*get_next_line(int fd)
 	return (NULL);
 }
 
+
 /*
 int main(void)
 {
 	char *newline;
-	//int fde = open("fde.txt", O_RDONLY);
-	int fdi = open("fdi.txt", O_RDONLY);
-	//int fd1 = open("fd1.txt", O_RDONLY);
-	//int fd2 = open("fd2.txt", O_RDONLY);
-	//int fd3 = open("fd3.txt", O_RDONLY);
-	//newline = get_next_line(1000);
-	//printf("%s", newline);
-	newline = get_next_line(fdi);
+	int fd = open("multiple_line_with_nl.txt", O_RDONLY);
+
+
+	newline = get_next_line(fd);
 	printf("%s", newline);
-	newline = get_next_line(fdi);
+
+	newline = get_next_line(fd);
 	printf("%s", newline);
-	//newline = get_next_line(fd1);
-	//printf("%s", newline);
-	//newline = get_next_line(fd2);
-	//printf("%s", newline);
-	//newline = get_next_line(fd3);
-	//printf("%s", newline);
-	//newline = get_next_line(fd1);
-	//printf("%s", newline);
-	//newline = get_next_line(fd2);
-	//printf("%s", newline);
-	//newline = get_next_line(fd3);
-	//printf("%s", newline);
-	//newline = get_next_line(-1);
-	//printf("%s", newline);
-	//newline = get_next_line(fd1);
-	//printf("%s", newline);
-	//newline = get_next_line(fd2);
-	//printf("%s", newline);
-	//newline = get_next_line(fd3);
-	//printf("%s", newline);
-	//newline = get_next_line(fd1);
-	//printf("%s", newline);
-	//newline = get_next_line(fd2);
-	//printf("%s", newline);
-	//newline = get_next_line(fd3);
-	//printf("%s", newline);
-	//newline = get_next_line(fd1);
-	//printf("%s", newline);
-	//newline = get_next_line(fd2);
-	//printf("%s", newline);
-	//newline = get_next_line(fd3);
-	//printf("%s", newline);
-	//while (newline)
-	//{
-	//	printf("%s\n", newline);
-	//	newline = get_next_line(fd);
-	//}
-	//close(fde);
-	close(fdi);
-	//close (fd1);
-	//close (fd2);
-	//close (fd3);
-	////free (newline);
-	//fscanf(stdin, "c");
+
+	newline = get_next_line(fd);
+	printf("%s", newline);
+
+
+	close(fd);
 	return (0);
 }
 */
+
+
+int main(void)
+{
+	char *newline;
+	int fde = open("multiple_line_with_nl.txt", O_RDONLY);
+	newline = get_next_line(fde);
+	printf("%s", newline);
+	newline = get_next_line(fde);
+	printf("%s", newline);
+	newline = get_next_line(fde);
+	printf("%s", newline);
+	return (0);
+}
