@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 13:32:38 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/30 16:44:14 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/30 21:11:01 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,23 @@ static void	new_line(char **arr, t_data *data, int fd)
 	if (data->i >= 0)
 	{
 		data->newline = ft_substr(arr[fd], 0, data->i + 1);
-		data->buff = ft_substr(arr[fd], data->i + 1, ft_strlen(arr[fd]) - data->i);
+		data->buff = ft_substr(arr[fd], data->i + 1, ft_strlen(arr[fd] + data->i + 1));
 		free(arr[fd]);
 		arr[fd] = NULL;
 		arr[fd] = ft_strdup(data->buff);
 		free(data->buff);
+		if (arr[fd][0] == '\0')
+		{
+			free(arr[fd]);
+			arr[fd] = NULL;
+		}
 	}
 	else
 	{
-		data->newline = ft_strdup(arr[fd]);
+		if (arr[fd][0] == '\0')
+			data->newline = NULL;
+		else
+			data->newline = ft_strdup(arr[fd]);
 		free(arr[fd]);
 		arr[fd] = NULL;
 	}
@@ -89,6 +97,8 @@ char	*get_next_line(int fd)
 	if (data.i >= 0 || data.r < BUFFER_SIZE)
 	{
 		new_line(arr, &data, fd);
+		//printf("arr[fd] value : %s\n", arr[fd]);
+		//printf("data.newline value : %s", data.newline);
 		return (data.newline);
 	}
 	data.r = 1;
@@ -114,7 +124,6 @@ char	*get_next_line(int fd)
 	return (NULL);
 }
 
-
 /*
 int main(void)
 {
@@ -137,7 +146,7 @@ int main(void)
 }
 */
 
-
+/*
 int main(void)
 {
 	char *newline;
@@ -146,7 +155,8 @@ int main(void)
 	printf("%s", newline);
 	newline = get_next_line(fde);
 	printf("%s", newline);
-	newline = get_next_line(fde);
-	printf("%s", newline);
+	//newline = get_next_line(fde);
+	//printf("%s", newline);
 	return (0);
 }
+*/
