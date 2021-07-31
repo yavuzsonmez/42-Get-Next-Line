@@ -6,7 +6,7 @@
 /*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 13:32:38 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/30 21:11:01 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/07/31 09:57:49 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,13 @@
 
 static void	new_line(char **arr, t_data *data, int fd)
 {
+	int	b;
+
+	b = ft_strlen(arr[fd] + data->i + 1);
 	if (data->i >= 0)
 	{
 		data->newline = ft_substr(arr[fd], 0, data->i + 1);
-		data->buff = ft_substr(arr[fd], data->i + 1, ft_strlen(arr[fd] + data->i + 1));
+		data->buff = ft_substr(arr[fd], data->i + 1, b);
 		free(arr[fd]);
 		arr[fd] = NULL;
 		arr[fd] = ft_strdup(data->buff);
@@ -63,7 +66,7 @@ static int	reader(char **arr, t_data *data, int fd)
 	{
 		data->buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (data->buff == NULL)
-			return(0);
+			return (0);
 		data->r = read(fd, data->buff, BUFFER_SIZE);
 		if (data->r == -1 || data->r == 0)
 		{
@@ -83,8 +86,8 @@ static int	reader(char **arr, t_data *data, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char *arr[4096];
-	t_data data;
+	static char	*arr[4096];
+	t_data		data;
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
@@ -97,8 +100,6 @@ char	*get_next_line(int fd)
 	if (data.i >= 0 || data.r < BUFFER_SIZE)
 	{
 		new_line(arr, &data, fd);
-		//printf("arr[fd] value : %s\n", arr[fd]);
-		//printf("data.newline value : %s", data.newline);
 		return (data.newline);
 	}
 	data.r = 1;
