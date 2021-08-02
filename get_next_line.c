@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 13:32:38 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/07/31 08:52:57 by ubuntu           ###   ########.fr       */
+/*   Updated: 2021/08/02 18:06:34 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ static void	new_line(char **arr, t_data *data, int fd)
 	}
 	else
 	{
-		if (arr[fd][0] == '\0')
-			data->newline = NULL;
-		else
-			data->newline = ft_strdup(arr[fd]);
+		data->newline = ft_strdup(arr[fd]);
 		free(arr[fd]);
 		arr[fd] = NULL;
 	}
@@ -115,8 +112,7 @@ char	*get_next_line(int fd)
 		}
 		if (data.r == 0)
 		{
-			data.i = ft_strlen(arr[fd]);
-			new_line(arr, &data, fd);
+			data.newline = ft_strdup(arr[fd]);
 			free(arr[fd]);
 			arr[fd] = NULL;
 			return (data.newline);
