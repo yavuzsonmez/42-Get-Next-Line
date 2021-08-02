@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 13:32:38 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/08/02 18:06:34 by ysonmez          ###   ########.fr       */
+/*   Updated: 2021/08/02 17:39:38 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,10 @@
 
 static void	new_line(char **arr, t_data *data, int fd)
 {
-	int	b;
-
-	b = ft_strlen(arr[fd] + data->i + 1);
 	if (data->i >= 0)
 	{
 		data->newline = ft_substr(arr[fd], 0, data->i + 1);
-		data->buff = ft_substr(arr[fd], data->i + 1, b);
+		data->buff = ft_strdup(arr[fd] + data->i + 1);
 		free(arr[fd]);
 		arr[fd] = NULL;
 		arr[fd] = ft_strdup(data->buff);
@@ -88,6 +85,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
+	data.r = BUFFER_SIZE;
 	if (arr[fd] == NULL)
 	{
 		if (!reader(arr, &data, fd))
@@ -99,7 +97,6 @@ char	*get_next_line(int fd)
 		new_line(arr, &data, fd);
 		return (data.newline);
 	}
-	data.r = 1;
 	while (data.r > 0)
 	{
 		if (!reader(arr, &data, fd) && arr[fd] == NULL)
