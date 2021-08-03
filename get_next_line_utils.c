@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:24:49 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/08/02 17:44:21 by ubuntu           ###   ########.fr       */
+/*   Updated: 2021/08/03 09:45:14 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,11 @@ char	*ft_strdup(const char *s)
 {
 	size_t	i;
 	char	*ss;
+	int		len;
 
 	i = 0;
-	ss = (char *)malloc(sizeof(char) * ft_strlen(s) + 1);
+	len = ft_strlen(s) + 1;
+	ss = (char *)malloc(sizeof(char) * len);
 	if (!ss)
 		return (NULL);
 	while (s[i])

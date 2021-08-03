@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 13:32:38 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/08/03 08:52:13 by ubuntu           ###   ########.fr       */
+/*   Updated: 2021/08/03 09:25:20 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ char	*get_next_line(int fd)
 	return (NULL);
 }
 
-/*
+
 int main(void)
 {
 	char *newline;
@@ -136,19 +136,4 @@ int main(void)
 	close(fd);
 	return (0);
 }
-*/
 
-/*
-int main(void)
-{
-	char *newline;
-	int fde = open("multiple_line_with_nl.txt", O_RDONLY);
-	newline = get_next_line(fde);
-	printf("%s", newline);
-	newline = get_next_line(fde);
-	printf("%s", newline);
-	//newline = get_next_line(fde);
-	//printf("%s", newline);
-	return (0);
-}
-*/
