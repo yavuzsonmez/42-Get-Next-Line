@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysonmez <ysonmez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 12:24:00 by ysonmez           #+#    #+#             */
-/*   Updated: 2021/08/03 20:07:45 by ubuntu           ###   ########.fr       */
+/*   Updated: 2021/08/27 18:35:32 by ysonmez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ char	*get_next_line(int fd);
 *	DATA STRUCT
 */
 
-typedef struct s_data
+typedef struct s_gnl
 {
 	char	*buff;
 	char	*newline;
 	int		r;
 	int		i;
-}	t_data;
+}	t_gnl;
 
 #endif
